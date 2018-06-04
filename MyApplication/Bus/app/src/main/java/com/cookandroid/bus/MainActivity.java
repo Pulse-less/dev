@@ -1,6 +1,7 @@
 package com.cookandroid.bus;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,14 +11,25 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     Button btnMenu, btnSearchChange;
     private long pressedTime;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //공유레퍼런스 메인에 가져오기 -> 공유레퍼런스가져오는것을 따로 코드로 분리할것인가?
+        pref = getSharedPreferences("Bookmark",0);
+        editor = pref.edit();
+
         btnMenu=(Button)findViewById(R.id.btnMenu);
         btnSearchChange = (Button)findViewById(R.id.btnSearchChange);
+
+        //공유프리퍼런스 값 가져오기
+        if(pref.getBoolean("Bring_My_Bookmark",false)){
+            //이곳에 설정
+        }
 
         btnSearchChange.setOnClickListener(new View.OnClickListener() {
             @Override
