@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
             //이곳에 설정
         }
 
+        //검색액티비티로 전환
         btnSearchChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //메뉴 -> 액티비티전환대신 따로 처리하는것으로 변경
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //뒤로가기 버튼 두번누를시 종료
     @Override
     public void onBackPressed() {
         //super.onBackPressed();

@@ -37,11 +37,19 @@ public class TabHostActivity extends TabActivity {
 
         final String[] titles2={"11","22","33","44","55","66","77","88","99","10"};
         final String[] genre2={"test","test","test","test","test","test","test","test","test","test"};
+
+        //테스트객체 생성될 곳에는 최근 검색리스트가 나오게끔 -> 즐겨찾기 추가도 이곳에서 가능하게끔 -> 사실상 즐겨찾기 추가기능을 처리하기위해선 즐겨찾기용 코드분리필요
         //테스트객체생성
         for(int i=0;i<titles.length;i++){
             mItem = new Movie(titles[i],genre[i]);
             mArray.add(mItem);
         }
+
+        //검색처리를 어떻게 할것인가? 어플 디비내에 있는 버스를 보여주나? 아니면 파싱받아서 파싱데이터만 보여주나?
+        //애초에 버스검색시에는 파싱받을데이터가 따로 필요없음. DB내에 있는 버스데이터만 쿼리문으로 작성해서 보여주면 된다.
+        //그럼 edittext로 입력받은 route_nm만 보이게끔하면 된다. -> select route_nm from route where route_id = ?
+        //select * from route where route_id = ? 가 맞는 쿼리가 될듯.
+        //저번에 만든 DB부터 추가하자
 
         busAdapter = new BusAdapter(this, mArray);
         busListView.setAdapter(busAdapter);
