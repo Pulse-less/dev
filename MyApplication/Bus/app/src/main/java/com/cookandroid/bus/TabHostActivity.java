@@ -17,6 +17,7 @@ public class TabHostActivity extends TabActivity {
     EditText editSearch;
     ListView busListView, stopListView;
     BusAdapter busAdapter;
+    BusDBHelper busDBHelper;
     ArrayList<Movie> mArray, mArray2;
     Movie mItem, mItem2;
 
@@ -31,6 +32,7 @@ public class TabHostActivity extends TabActivity {
         stopListView = (ListView)findViewById(R.id.stopListView);
         mArray = new ArrayList<Movie>();
         mArray2 = new ArrayList<Movie>();
+        busDBHelper = new BusDBHelper(this, "busDB.db",null,1);
 
         final String[] titles={"One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"};
         final String[] genre={"test","test","test","test","test","test","test","test","test","test"};
@@ -51,6 +53,10 @@ public class TabHostActivity extends TabActivity {
         //select * from route where route_id = ? 가 맞는 쿼리가 될듯.
         //저번에 만든 DB부터 추가하자
 
+        if(editSearch.getText() == null){
+
+        }
+
         busAdapter = new BusAdapter(this, mArray);
         busListView.setAdapter(busAdapter);
 
@@ -66,11 +72,12 @@ public class TabHostActivity extends TabActivity {
         final TabHost tabHost = getTabHost();
 
         //버스검색 탭
-        TabHost.TabSpec tab1=tabHost.newTabSpec("TAB1");
+        final TabHost.TabSpec tab1=tabHost.newTabSpec("TAB1");
         tab1.setIndicator("버스",getResources().getDrawable(R.drawable.busicon)).setContent(R.id.busListView);
         tabHost.addTab(tab1);
         //버스검색탭 동작 정의
         //Intent busIn = new Intent(getApplicationContext(), )
+
 
         //정류장검색 탭
         TabHost.TabSpec tab2=tabHost.newTabSpec("TAB2");
@@ -78,6 +85,21 @@ public class TabHostActivity extends TabActivity {
         tabHost.addTab(tab2);
 
         tabHost.setCurrentTab(0);
+
+        //탭변경시 이벤트처리
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+//                switch (tabId){
+//                    case tabHost.getCurrentTabTag().equals("TAB1"):
+//                }
+                if(tabHost.getCurrentTabTag().equals("TAB1")){
+                    editSearch.setHint("버스 검색");
+                }else{
+                    editSearch.setHint("정류장 검색");
+                }
+            }
+        });
 
         //탭별 동작정의
 //        if(tabHost.getCurrentTabView()==busListView){

@@ -2,6 +2,7 @@ package com.cookandroid.bus;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
     private long pressedTime;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
+    BusDBHelper dbHelper;
+    SQLiteDatabase sqlDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         if(pref.getBoolean("Bring_My_Bookmark",false)){
             //이곳에 설정
         }
+
+        //디비설정
+        dbHelper = new BusDBHelper(this, "busDB.db",null,1);
 
         //검색액티비티로 전환
         btnSearchChange.setOnClickListener(new View.OnClickListener() {

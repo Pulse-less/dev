@@ -36,6 +36,8 @@ public class BusAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
             convertView = View.inflate(mContext,R.layout.buslist,null);
+            //edittext받아서 db검색하여 뷰보여줄라면..
+
         }
         TextView txt1 = (TextView)convertView.findViewById(R.id.txt1);
         TextView txt2 = (TextView)convertView.findViewById(R.id.txt2);
