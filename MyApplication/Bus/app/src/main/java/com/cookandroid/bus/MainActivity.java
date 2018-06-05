@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         //디비설정
         dbHelper = new BusDBHelper(this, "busDB.db",null,1);
+        sqlDB = dbHelper.getWritableDatabase();
 
         //검색액티비티로 전환
         btnSearchChange.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), MenuActivity.class);
+                Intent in = new Intent(getApplicationContext(), Test.class);
                 startActivity(in);
             }
         });
