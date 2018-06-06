@@ -21,7 +21,7 @@ public class BusDBHelper extends SQLiteOpenHelper {
         //db.execSQL("create table route(route_id char(20), route_nm char(20))");
         //db.execSQL("create table route(route_id char(20), route_nm char(20)) ");
         //db.execSQL("create table station(station_id char(20), station_nm char(50))");
-        db.execSQL("");
+        //db.execSQL("");
     }
 
     @Override
