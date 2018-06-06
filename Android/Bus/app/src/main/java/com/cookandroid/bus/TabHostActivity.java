@@ -53,10 +53,6 @@ public class TabHostActivity extends TabActivity {
         //select * from route where route_id = ? 가 맞는 쿼리가 될듯.
         //저번에 만든 DB부터 추가하자
 
-        if(editSearch.getText() == null){
-
-        }
-
         busAdapter = new BusAdapter(this, mArray);
         busListView.setAdapter(busAdapter);
 
