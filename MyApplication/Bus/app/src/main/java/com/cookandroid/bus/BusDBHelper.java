@@ -19,13 +19,14 @@ public class BusDBHelper extends SQLiteOpenHelper {
         //정류소테이블은 정류소명이나 정류소번호가 필요하다. station table
         //정류소검색을 위한 파라메터로는 string형식의 station_id 또는 stationName이 필요하다. 이름으로 넘길때는 인코딩에 조심
         //db.execSQL("create table route(route_id char(20), route_nm char(20))");
+        //db.execSQL("create table route(route_id char(20), route_nm char(20)) ");
         //db.execSQL("create table station(station_id char(20), station_nm char(50))");
+        db.execSQL("");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //db.execSQL("drop table if exists route");
-        //db.execSQL("drop table if exists station");
         onCreate(db);
     }
 }
