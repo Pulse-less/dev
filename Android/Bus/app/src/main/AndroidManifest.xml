@@ -39,7 +39,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".TabHostActivity" />
-        <activity android:name=".NetworkStatusActivity"></activity>
+        <activity android:name=".NetworkStatusActivity" />
+        <activity android:name=".DownHtmlActivity"/>
     </application>
 
 </manifest>

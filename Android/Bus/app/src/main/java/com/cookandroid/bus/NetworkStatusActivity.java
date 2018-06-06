@@ -1,6 +1,7 @@
 package com.cookandroid.bus;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -34,8 +35,11 @@ public class NetworkStatusActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"인터넷에 연결되어 있지 않습니다.",Toast.LENGTH_SHORT).show();
         }
         if(activeNetwork!=null){
-            sResult += "Active:\n"+activeNetwork.toString()+"\n";
-            result.setText(sResult);
+//            sResult += "Active:\n"+activeNetwork.toString()+"\n";
+//            result.setText(sResult);
+            Intent intent = new Intent(getApplicationContext(),DownHtmlActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
         }
     }
 }
