@@ -1,6 +1,6 @@
 
 public class Route {
-	private String routd_Id; //노선id
+	private String route_Id; //노선id
 	private String route_Nm; //노선명
 	private String route_Tp; //노선형태
 	private String st_Sta_Id; //기점정류장id
@@ -21,12 +21,12 @@ public class Route {
 	private String region_Name; //운행지역
 	private String district_Cd; //운행지역코드 1.서울 2.경기 3.인천
 	
-	public Route(String routd_Id, String route_Nm, String route_Tp, String st_Sta_Id, String st_Sta_Nm,
+	public Route(String route_Id, String route_Nm, String route_Tp, String st_Sta_Id, String st_Sta_Nm,
 			String st_Sta_No, String ed_Sta_Id, String ed_Sta_Nm, String ed_Sta_No, String up_First_Time,
 			String up_Last_Time, String down_First_Time, String down_Last_Time, String peek_Alloc, String npeek_Alloc,
 			String company_Id, String company_Nm, String tel_No, String region_Name, String district_Cd) {
 		super();
-		this.routd_Id = routd_Id;
+		this.route_Id = route_Id;
 		this.route_Nm = route_Nm;
 		this.route_Tp = route_Tp;
 		this.st_Sta_Id = st_Sta_Id;
@@ -48,11 +48,11 @@ public class Route {
 		this.district_Cd = district_Cd;
 	}
 	
-	public String getRoutd_Id() {
-		return routd_Id;
+	public String getRoute_Id() {
+		return route_Id;
 	}
-	public void setRoutd_Id(String routd_Id) {
-		this.routd_Id = routd_Id;
+	public void setRoute_Id(String route_Id) {
+		this.route_Id = route_Id;
 	}
 	public String getRoute_Nm() {
 		return route_Nm;
