@@ -62,20 +62,22 @@ public class MainActivity extends AppCompatActivity {
         edt1 = (EditText)findViewById(R.id.edt1);
         //txt1 = (TextView)findViewById(R.id.txt1);
 
-//        btn2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                try{
-//                    String result;
-//                    MyTask task = new MyTask();
-//                    //result = task.execute(edt1.getText().toString()).get();
-//                    result = task.execute(edt1.getText().toString()).get();
-//                    Log.i("리턴 값 확인: ",result);
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    String result;
+                    MyTask task = new MyTask();
+                    //result = task.execute(edt1.getText().toString()).get();
+                    result = task.execute(edt1.getText().toString()).get();
+                    Log.i("리턴 값 확인: ",result);
+                    
+                    //xml 파싱
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                             conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
                             conn.setRequestMethod("POST");
                             String sendMsg = "route_nm="+edt1.getText().toString();
-                            OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream(),"euc-kr");
+                            OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
                             osw.write(sendMsg);
                             osw.flush();
                             osw.close();
