@@ -70,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     MyTask task = new MyTask();
                     //result = task.execute(edt1.getText().toString()).get();
                     result = task.execute(edt1.getText().toString()).get();
-                    Log.i("리턴 값 확인: ",result);
-                    
+                    //Log.i("리턴 값 확인: ",result);
                     //xml 파싱
                 }catch (Exception e){
                     e.printStackTrace();
@@ -192,6 +191,44 @@ public class MainActivity extends AppCompatActivity {
                     while((str=br.readLine())!=null){
                         sb.append(str);
                     }
+
+                    //xml파싱 추가
+                    XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+                    InputStream is = url.openStream();
+                    parser.setInput(is,"utf-8");
+                    int eventType = parser.getEventType();
+                    String tag;
+                    RouteDTO dto = null;
+                    while(eventType!=XmlPullParser.END_DOCUMENT){
+                        switch(eventType){
+                            case XmlPullParser.START_TAG:
+                                tag = parser.getName();
+                                if(tag.equals("route_id")){
+                                    dto = new RouteDTO();
+                                    dto.setRoute_id(parser.nextText());
+                                }
+                                if(tag.equals("route_nm")){
+                                    dto.setRoute_nm(parser.nextText());
+                                }
+                                if(tag.equals("district_cd")){
+                                    dto.setDistrict_cd(parser.nextText());
+                                }
+                                break;
+                            case XmlPullParser.END_TAG:
+                                tag = parser.getName();
+                                if(tag.equals("route")){
+                                    list.add(dto);
+                                    dto=null;
+                                }
+                                break;
+                        }
+                        eventType = parser.next();
+                    }
+                    Log.i("test","route_list:"+list);
+                    //핸들러 메시지전송
+                    handler.sendEmptyMessage(0);
+                    //연결종료
+
                     receiveMsg = sb.toString();
                     br.close();
                     isr.close();
