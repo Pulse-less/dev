@@ -2,7 +2,7 @@
     <wb-module deploy-name="busServer">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="busServer"/>
         <property name="java-output-path" value="/busServer/build/classes"/>
+        <property name="context-root" value="busServer/"/>
     </wb-module>
 </project-modules>

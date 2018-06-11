@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //디비설정
-        dbHelper = new BusDBHelper(this, "busDB.db",null,1);
+        //dbHelper = new BusDBHelper(this, "busDB.db",null,1);
 
         //검색액티비티로 전환
         btnSearchChange.setOnClickListener(new View.OnClickListener() {

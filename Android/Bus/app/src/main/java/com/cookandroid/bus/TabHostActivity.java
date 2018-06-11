@@ -17,7 +17,7 @@ public class TabHostActivity extends TabActivity {
     EditText editSearch;
     ListView busListView, stopListView;
     BusAdapter busAdapter;
-    BusDBHelper busDBHelper;
+    //BusDBHelper busDBHelper;
     ArrayList<Movie> mArray, mArray2;
     Movie mItem, mItem2;
 
@@ -32,7 +32,6 @@ public class TabHostActivity extends TabActivity {
         stopListView = (ListView)findViewById(R.id.stopListView);
         mArray = new ArrayList<Movie>();
         mArray2 = new ArrayList<Movie>();
-        busDBHelper = new BusDBHelper(this, "busDB.db",null,1);
 
         final String[] titles={"One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"};
         final String[] genre={"test","test","test","test","test","test","test","test","test","test"};
@@ -86,9 +85,7 @@ public class TabHostActivity extends TabActivity {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-//                switch (tabId){
-//                    case tabHost.getCurrentTabTag().equals("TAB1"):
-//                }
+
                 if(tabHost.getCurrentTabTag().equals("TAB1")){
                     editSearch.setHint("버스 검색");
                 }else{
@@ -109,6 +106,11 @@ public class TabHostActivity extends TabActivity {
         //이때 해당항목의 리스트를 누르면 인텐트를 넘겨서 busSearch or stopsearch 액티비티로 넘어가도록하자
 
 
+
+
+
+
+        //뒤로가기
         btnBack1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
