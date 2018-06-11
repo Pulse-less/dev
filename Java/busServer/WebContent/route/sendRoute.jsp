@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=euc-kr"
+    pageEncoding="euc-kr"%>
+
 <%@page import="javax.xml.parsers.DocumentBuilder"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@ page import="java.io.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
@@ -8,26 +9,42 @@
 <%@ page import="org.jdom2.*" %>
 <%@ page import="org.jdom2.output.*" %>
 <%
+	//request.setCharacterEncoding("UTF-8");
 	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 	String id = "scott";
 	String pw = "tiger";
-	//String param = request.getParameter("vision_write");
+	
+	String param = request.getParameter("route_nm")==null?"":request.getParameter("route_nm");
+	
+	//System.out.println(param);
+	if(param.equals("88")){
+		out.println("Âü true");
+	}else{
+		out.println("°ÅÁþ false");
+	}
+	
+	out.clear();
+	out.print(param);
+	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
+	
 	try{
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		conn = DriverManager.getConnection(url,id,pw);
-		String sql = "select * from route where route_nm like '%88%' order by route_nm ";
-		pstmt = conn.prepareStatement(sql);
-		//pstmt.setString(1,param);
-		rs = pstmt.executeQuery();
-		//xmlë¬¸ì„œ ìž‘ì„±
+		if(!param.equals("")){
+			String sql = "select * from route where route_nm like ?||'%' order by route_nm";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,param);
+			rs = pstmt.executeQuery();
+		}
+		//xml¹®¼­ ÀÛ¼º
 		Element root = new Element("route_info");
 		Document doc = new Document(root);
-		int temp = 1;
+		int index = 1;
 		while(rs.next()){
-			//ìžì‹ë…¸ë“œ ìƒì„±
+			//ÀÚ½Ä³ëµå »ý¼º
 			Element data = new Element("route");
 			Element route_id = new Element("route_id");
 			route_id.setText(rs.getString("route_id"));
@@ -38,39 +55,42 @@
 			data.addContent(route_nm);
 			
 			root.addContent(data);
-			
-			System.out.println(temp +". ="+rs.getString("route_id"));
-			System.out.println(temp +". ="+rs.getString("route_nm"));
-			temp++;
+			System.out.println(param);
+			System.out.println(index +". ="+rs.getString("route_id"));
+			System.out.println(index +". ="+rs.getString("route_nm"));
+			index++;
 		}
 		
 		XMLOutputter xout = new XMLOutputter();
 		Format f = xout.getFormat();
-		f.setEncoding("utf-8");//ì¸ì½”ë”©ì„¤ì •
-		f.setIndent("\t");//ë“¤ì—¬ì“°ê¸°ì„¤ì •
-		f.setLineSeparator("\r\n");//ì¤„ë°”ê¿ˆì„¤ì •
-		f.setTextMode(Format.TextMode.TRIM);//ê³µë°±ì œê±° 
+		f.setEncoding("utf-8");//ÀÎÄÚµù¼³Á¤
+		f.setIndent("\t");//µé¿©¾²±â¼³Á¤
+		f.setLineSeparator("\r\n");//ÁÙ¹Ù²Þ¼³Á¤
+		f.setTextMode(Format.TextMode.TRIM);//°ø¹éÁ¦°Å 
 		xout.setFormat(f);
-		//xmlë¬¸ì„œíŒŒì¼ì„ ì €ìž¥í•  ê²½ìš°
+		//xml¹®¼­ÆÄÀÏÀ» ÀúÀåÇÒ °æ¿ì
 		//xout.output(doc, new FileWriter("d:/jdom.xml"));
 		//xout.output(doc,out);
-		//xmlë¬¸ì„œ ë‚´ìš©ì„ ìŠ¤íŠ¸ë§ìœ¼ë¡œ ë°”ê¾¸ê¸°
+		//xml¹®¼­ ³»¿ëÀ» ½ºÆ®¸µÀ¸·Î ¹Ù²Ù±â
 		String result = xout.outputString(doc);
-		//jsp ì¶œë ¥ì˜ì—­ ì‚­ì œ
+		//jsp Ãâ·Â¿µ¿ª »èÁ¦
 		out.clear();
-		//ì›¹ë¸Œë¼ìš°ì €ì— ì¶œë ¥
+		//À¥ºê¶ó¿ìÀú¿¡ Ãâ·Â
 		out.print(result);
+		System.out.println("xml¿Ï¼º ³¡!");
+		if(rs!=null) rs.close();
+		if(pstmt!=null) pstmt.close();
+		if(conn!=null) conn.close();
 	}catch(Exception e){
 		e.printStackTrace();
 	}finally{
-		//db ì¢…ë£Œ
-		try{
+		//db Á¾·á
+		/* try{
 			if(rs!=null) rs.close();
 			if(pstmt!=null) pstmt.close();
 			if(conn!=null) conn.close();
 		}catch(Exception e){
 			e.printStackTrace();
-		}
+		} */
 	}
-
 %>

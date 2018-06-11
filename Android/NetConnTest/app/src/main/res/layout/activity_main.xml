@@ -21,6 +21,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn1"
             android:text="확인"/>
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="데이터보낸후 검색"/>
     </LinearLayout>
 
 

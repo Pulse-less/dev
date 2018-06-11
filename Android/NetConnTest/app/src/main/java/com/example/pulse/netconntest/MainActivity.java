@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn1;
+    Button btn1,btn2;
     ListView listView;
     //ScrollView scrollView;
     EditText edt1;
@@ -56,10 +56,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btn1 = (Button)findViewById(R.id.btn1);
+        btn2 = (Button)findViewById(R.id.btn2);
         listView = (ListView)findViewById(R.id.listView);
         //scrollView = (ScrollView)findViewById(R.id.scrollView);
         edt1 = (EditText)findViewById(R.id.edt1);
         //txt1 = (TextView)findViewById(R.id.txt1);
+
+//        btn2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try{
+//                    String result;
+//                    MyTask task = new MyTask();
+//                    //result = task.execute(edt1.getText().toString()).get();
+//                    result = task.execute(edt1.getText().toString()).get();
+//                    Log.i("리턴 값 확인: ",result);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +84,39 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try{
+                            //로컬변수
+                            String str;
                             list = new ArrayList<>();
+                            //파라미터 넘긴 후 데이터 요청
+
                             URL url = new URL("http://192.168.0.2:8080/busServer/route/sendRoute.jsp");
+                            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                            conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+                            conn.setRequestMethod("POST");
+                            String sendMsg = "route_nm="+edt1.getText().toString();
+                            OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream(),"euc-kr");
+                            osw.write(sendMsg);
+                            osw.flush();
+                            osw.close();
+                            //연결ok
+                            if(conn.getResponseCode()==conn.HTTP_OK){
+                                InputStreamReader isr = new InputStreamReader(conn.getInputStream(),"euc-kr");
+                                BufferedReader br = new BufferedReader(isr);
+                                StringBuffer sb = new StringBuffer();
+                                while((str=br.readLine())!=null){
+                                    sb.append(str);
+                                }
+                                //receiveMsg = sb.toString();
+                                conn.disconnect();
+                                br.close();
+                                isr.close();
+
+                            }else{
+                                Log.i("통신결과확인 : ",conn.getResponseCode()+"에러");
+                            }
+                            //conn.disconnect();
+
+                            //데이터넘어온후 파싱부분
                             XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
                             InputStream is = url.openStream();
                             parser.setInput(is,"utf-8");
@@ -116,6 +163,49 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    //비동기화 스레드
+    class MyTask extends AsyncTask<String, Void, String>{
+        String sendMsg, receiveMsg;
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try{
+                String str;
+                URL url = new URL("http://192.168.0.2:8080/busServer/route/sendRoute.jsp");
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setUseCaches(false);
+                sendMsg = "route_nm="+strings[0];
+
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream(),"euc-kr");
+                osw.write(sendMsg);
+                osw.flush();
+                if(conn.getResponseCode()==conn.HTTP_OK){
+                    InputStreamReader isr = new InputStreamReader(conn.getInputStream(),"euc-kr");
+                    BufferedReader br = new BufferedReader(isr);
+                    StringBuffer sb = new StringBuffer();
+                    while((str=br.readLine())!=null){
+                        sb.append(str);
+                    }
+                    receiveMsg = sb.toString();
+                    br.close();
+                    isr.close();
+                    osw.close();
+                }else{
+                    Log.i("통신결과확인 : ",conn.getResponseCode()+"에러");
+                }
+                conn.disconnect();
+            }catch(Exception e){
+
+            }
+
+            return receiveMsg;
+        }
+    }
+
     //어댑터
     class RouteAdapter extends BaseAdapter{
         Context context;
