@@ -37,7 +37,7 @@ public class NetworkStatusActivity extends AppCompatActivity {
         if(activeNetwork!=null){
 //            sResult += "Active:\n"+activeNetwork.toString()+"\n";
 //            result.setText(sResult);
-            Intent intent = new Intent(getApplicationContext(),DownHtmlActivity.class);
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }

@@ -14,8 +14,6 @@ public class MainActivity extends AppCompatActivity {
     private long pressedTime;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
-    BusDBHelper dbHelper;
-    SQLiteDatabase sqlDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), MenuActivity.class);
-                startActivity(in);
+
             }
         });
 
