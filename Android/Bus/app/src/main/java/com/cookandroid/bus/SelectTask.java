@@ -3,11 +3,11 @@ package com.cookandroid.bus;
 import android.content.ContentValues;
 import android.os.AsyncTask;
 
-class RouteTask extends AsyncTask<Void, Void, String>{
+class SelectTask extends AsyncTask<Void, Void, String>{
     private String url;
     private ContentValues values;
 
-    public RouteTask(String url, ContentValues values){
+    public SelectTask(String url, ContentValues values){
         this.url = url;
         this.values = values;
     }

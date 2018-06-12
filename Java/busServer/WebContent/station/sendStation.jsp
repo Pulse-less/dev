@@ -10,7 +10,7 @@
 
 <%
 	request.setCharacterEncoding("UTF-8");
-	String param = request.getParameter("station_nm")==null?" ":request.getParameter("station_nm");
+	String param = request.getParameter("mobile_no")==null?" ":request.getParameter("mobile_no");
 	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 	String id = "scott";
 	String pw = "tiger";
@@ -21,7 +21,7 @@
 	try{
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		conn = DriverManager.getConnection(url, id, pw);
-		String sql = "select * from station where station_nm like ?||'%' order by station_nm";
+		String sql = "select * from station where mobile_no like ?||'%' order by mobile_no";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, param);
 		rs = pstmt.executeQuery();
@@ -82,13 +82,3 @@
 		}
 	}
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>

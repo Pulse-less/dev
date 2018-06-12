@@ -1,6 +1,5 @@
 package com.cookandroid.bus;
 
-import android.app.Activity;
 import android.app.TabActivity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -31,17 +29,28 @@ public class TabHostActivity extends TabActivity {
     Button btnBack;
     EditText routeSearch,stationSearch;
     ListView busListView, stopListView;
-    RouteAdapter adapter;
+    RouteAdapter routeAdapter;
+    StationAdapter stationAdapter;
     ArrayList<RouteDTO> routelist;
     ArrayList<StationDTO> stationlist;
     String xmlString;
+
     //핸들러 설정
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            adapter = new RouteAdapter(getApplicationContext(), routelist);
-            busListView.setAdapter(adapter);
+            routeAdapter = new RouteAdapter(getApplicationContext(), routelist);
+            busListView.setAdapter(routeAdapter);
+        }
+    };
+
+    Handler stHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            stationAdapter = new StationAdapter(getApplicationContext(),stationlist);
+            stopListView.setAdapter(stationAdapter);
         }
     };
 
@@ -98,7 +107,7 @@ public class TabHostActivity extends TabActivity {
                     String url = Common.SERVER_URL+"/busServer/route/sendRoute.jsp";
                     ContentValues values = new ContentValues();
                     values.put("route_nm",v.getText().toString());
-                    RouteTask routeTask = new RouteTask(url, values);
+                    SelectTask routeTask = new SelectTask(url, values);
                     try{
                         xmlString = routeTask.execute().get();
                         //xml파싱 스레드 작성
@@ -140,6 +149,7 @@ public class TabHostActivity extends TabActivity {
                                         eventType = parser.next();
                                     }
                                     handler.sendEmptyMessage(0);
+                                    is.close();
                                 }catch(Exception e){
                                     //파서에러
                                     e.printStackTrace();
@@ -156,6 +166,7 @@ public class TabHostActivity extends TabActivity {
                     imm.hideSoftInputFromWindow(routeSearch.getWindowToken(),0);
                     return true;
                 }
+                xmlString = null;
                 return true;
             }
         });
@@ -168,12 +179,12 @@ public class TabHostActivity extends TabActivity {
                     //Log.i("입력확인", v.getText().toString());
                     String url = Common.SERVER_URL+"/busServer/station/sendStation.jsp";
                     ContentValues values = new ContentValues();
-                    values.put("station_nm",v.getText().toString());
-                    RouteTask routeTask = new RouteTask(url, values);
+                    values.put("mobile_no",v.getText().toString());
+                    SelectTask stationTask = new SelectTask(url, values);
                     try{
-                        xmlString = routeTask.execute().get();
+                        xmlString = stationTask.execute().get();
                         //xml파싱 스레드 작성
-                        Thread th = new Thread(new Runnable() {
+                        Thread th2 = new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -213,14 +224,15 @@ public class TabHostActivity extends TabActivity {
                                         }
                                         eventType = parser.next();
                                     }
-                                    handler.sendEmptyMessage(0);
+                                    stHandler.sendEmptyMessage(0);
+                                    is.close();
                                 }catch(Exception e){
                                     //파서에러
                                     e.printStackTrace();
                                 }
                             }
                         });
-                        th.start();
+                        th2.start();
                     }catch(Exception e){
                         //버스루트 검색실패시
                         e.printStackTrace();
@@ -230,6 +242,7 @@ public class TabHostActivity extends TabActivity {
                     imm.hideSoftInputFromWindow(stationSearch.getWindowToken(),0);
                     return true;
                 }
+                xmlString = null;
                 return true;
             }
         });
