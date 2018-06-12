@@ -40,13 +40,13 @@ public class ConnectDB {
 				System.out.println(rs.getString("route_nm"));
 			}
 			
-			makeXml(rs);
+			makeXml();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void makeXml(ResultSet rs) {
+	public void makeXml() {
 		try {
 			Element root = new Element("route_info");
 			Document doc = new Document(root);
@@ -87,7 +87,8 @@ public class ConnectDB {
 			}catch(Exception e){
 				e.printStackTrace();
 			}finally {
-				try{//여기서 종료
+				try {
+					//여기서 종료
 					if(rs!=null) rs.close();
 					if(pstmt!=null) pstmt.close();
 					if(conn!=null) conn.close();

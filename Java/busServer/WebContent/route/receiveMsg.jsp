@@ -6,12 +6,13 @@
 	//안드로이드로부터 파라메터 받기
 	String param = request.getParameter("route_nm")==null?" ":request.getParameter("route_nm");
 	//디비에 보내기
-	//ConnectDB connectDB = ConnectDB.getInstance();
-	//connectDB.connectionDB(param);
+	ConnectDB connectDB = ConnectDB.getInstance();
+	connectDB.connectionDB(param);
 %>    
 
 <%-- <%
 	RequestDispatcher rd = request.getRequestDispatcher("sendRoute.jsp");
+	rd.forward(request, response);
 %> --%>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

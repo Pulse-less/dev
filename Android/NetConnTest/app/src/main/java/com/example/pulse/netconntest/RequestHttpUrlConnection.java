@@ -20,8 +20,8 @@ public class RequestHttpUrlConnection {
         StringBuffer sbParams = new StringBuffer();
 
         /*
-         * 1. StringBuffer에 파라미터 연결
-         * */
+        * 1. StringBuffer에 파라미터 연결
+        * */
         if(_params == null) sbParams.append("");
         else{
             boolean isAnd = false;
