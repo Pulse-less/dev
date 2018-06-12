@@ -14,14 +14,15 @@
 	String id = "scott";
 	String pw = "tiger";
 	
-	String param = request.getParameter("route_nm")==null?"":request.getParameter("route_nm");
+	//String param = request.getParameter("route_nm");
+	String param = request.getParameter("route_nm")==null?"none":request.getParameter("route_nm");
+	System.out.println(param+"Ã¼Å©");
 	
-	//System.out.println(param);
-	if(param.equals("88")){
+/* 	if(param.equals("88")){
 		out.println("Âü true");
 	}else{
 		out.println("°ÅÁþ false");
-	}
+	} */
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
@@ -53,8 +54,8 @@
 				
 				root.addContent(data);
 				System.out.println(param);
-				System.out.println(index +". ="+rs.getString("route_id"));
-				System.out.println(index +". ="+rs.getString("route_nm"));
+				System.out.println(index +". "+rs.getString("route_id"));
+				System.out.println(index +". "+rs.getString("route_nm"));
 				index++;
 			}
 			

@@ -21,11 +21,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn1"
             android:text="확인"/>
-        <Button
-            android:id="@+id/btn2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="데이터보낸후 검색"/>
     </LinearLayout>
 
 
@@ -39,6 +34,11 @@
             <!--android:layout_height="wrap_content"-->
             <!--android:id="@+id/txt1"/>-->
     <!--</ScrollView>-->
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="1"/>
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"

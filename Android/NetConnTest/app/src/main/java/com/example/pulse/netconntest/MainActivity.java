@@ -1,5 +1,6 @@
 package com.example.pulse.netconntest;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -20,8 +21,10 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
@@ -30,12 +33,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn1,btn2;
+    Button btn1,btn2,btn3;
     ListView listView;
     //ScrollView scrollView;
     EditText edt1;
@@ -50,202 +54,57 @@ public class MainActivity extends AppCompatActivity {
             listView.setAdapter(adapter);
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn1 = (Button)findViewById(R.id.btn1);
-        btn2 = (Button)findViewById(R.id.btn2);
-        listView = (ListView)findViewById(R.id.listView);
+        btn1 = (Button) findViewById(R.id.btn1);
+        listView = (ListView) findViewById(R.id.listView);
         //scrollView = (ScrollView)findViewById(R.id.scrollView);
-        edt1 = (EditText)findViewById(R.id.edt1);
-        //txt1 = (TextView)findViewById(R.id.txt1);
-
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    String result;
-                    MyTask task = new MyTask();
-                    //result = task.execute(edt1.getText().toString()).get();
-                    result = task.execute(edt1.getText().toString()).get();
-                    //Log.i("리턴 값 확인: ",result);
-                    //xml 파싱
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
+        edt1 = (EditText) findViewById(R.id.edt1);
+        txt1 = (TextView) findViewById(R.id.txt1);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Thread th = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            //로컬변수
-                            String str;
-                            list = new ArrayList<>();
-                            //파라미터 넘긴 후 데이터 요청
-
-                            URL url = new URL("http://192.168.0.2:8080/busServer/route/sendRoute.jsp");
-                            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-                            conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-                            conn.setRequestMethod("POST");
-                            String sendMsg = "route_nm="+edt1.getText().toString();
-                            OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                            osw.write(sendMsg);
-                            osw.flush();
-                            osw.close();
-                            //연결ok
-                            if(conn.getResponseCode()==conn.HTTP_OK){
-                                InputStreamReader isr = new InputStreamReader(conn.getInputStream(),"euc-kr");
-                                BufferedReader br = new BufferedReader(isr);
-                                StringBuffer sb = new StringBuffer();
-                                while((str=br.readLine())!=null){
-                                    sb.append(str);
-                                }
-                                //receiveMsg = sb.toString();
-                                conn.disconnect();
-                                br.close();
-                                isr.close();
-
-                            }else{
-                                Log.i("통신결과확인 : ",conn.getResponseCode()+"에러");
-                            }
-                            //conn.disconnect();
-
-                            //데이터넘어온후 파싱부분
-                            XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-                            InputStream is = url.openStream();
-                            parser.setInput(is,"utf-8");
-                            int eventType = parser.getEventType();
-                            String tag;
-                            RouteDTO dto = null;
-                            while(eventType!=XmlPullParser.END_DOCUMENT){
-                                switch(eventType){
-                                    case XmlPullParser.START_TAG:
-                                        tag = parser.getName();
-                                        if(tag.equals("route_id")){
-                                            dto = new RouteDTO();
-                                            dto.setRoute_id(parser.nextText());
-                                        }
-                                        if(tag.equals("route_nm")){
-                                            dto.setRoute_nm(parser.nextText());
-                                        }
-                                        if(tag.equals("district_cd")){
-                                            dto.setDistrict_cd(parser.nextText());
-                                        }
-                                        break;
-                                    case XmlPullParser.END_TAG:
-                                        tag = parser.getName();
-                                        if(tag.equals("route")){
-                                            list.add(dto);
-                                            dto=null;
-                                        }
-                                        break;
-                                }
-                                eventType = parser.next();
-                            }
-                            Log.i("test","route_list:"+list);
-                            //핸들러 메시지전송
-                            handler.sendEmptyMessage(0);
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                th.start();
-
+                String url = "http://192.168.0.2:8080/busServer/route/sendRoute.jsp";
+                ContentValues values = new ContentValues();
+                values.put("route_nm", edt1.getText().toString());
+                TestTask testTask = new TestTask(url, values);
+                testTask.execute();
             }
         });
-
-
     }
-    //비동기화 스레드
-    class MyTask extends AsyncTask<String, Void, String>{
-        String sendMsg, receiveMsg;
+    //이너클래스로 설정 -> 데이터가져오기
+    class TestTask extends AsyncTask<Void, Void, String>{
+        private String url;
+        private ContentValues values;
+
+        public TestTask(String url, ContentValues values){
+            this.url = url;
+            this.values = values;
+        }
 
         @Override
-        protected String doInBackground(String... strings) {
-            try{
-                String str;
-                URL url = new URL("http://192.168.0.2:8080/busServer/route/sendRoute.jsp");
-                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-                conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-                conn.setUseCaches(false);
-                sendMsg = "route_nm="+strings[0];
+        protected String doInBackground(Void... params) {
+            String result; //요청결과 저장변수
+            RequestHttpUrlConnection requestHttpUrlConnection = new RequestHttpUrlConnection();
+            result = requestHttpUrlConnection.request(url,values);
 
-                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream(),"euc-kr");
-                osw.write(sendMsg);
-                osw.flush();
-                if(conn.getResponseCode()==conn.HTTP_OK){
-                    InputStreamReader isr = new InputStreamReader(conn.getInputStream(),"euc-kr");
-                    BufferedReader br = new BufferedReader(isr);
-                    StringBuffer sb = new StringBuffer();
-                    while((str=br.readLine())!=null){
-                        sb.append(str);
-                    }
+            return result;
+        }
 
-                    //xml파싱 추가
-                    XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-                    InputStream is = url.openStream();
-                    parser.setInput(is,"utf-8");
-                    int eventType = parser.getEventType();
-                    String tag;
-                    RouteDTO dto = null;
-                    while(eventType!=XmlPullParser.END_DOCUMENT){
-                        switch(eventType){
-                            case XmlPullParser.START_TAG:
-                                tag = parser.getName();
-                                if(tag.equals("route_id")){
-                                    dto = new RouteDTO();
-                                    dto.setRoute_id(parser.nextText());
-                                }
-                                if(tag.equals("route_nm")){
-                                    dto.setRoute_nm(parser.nextText());
-                                }
-                                if(tag.equals("district_cd")){
-                                    dto.setDistrict_cd(parser.nextText());
-                                }
-                                break;
-                            case XmlPullParser.END_TAG:
-                                tag = parser.getName();
-                                if(tag.equals("route")){
-                                    list.add(dto);
-                                    dto=null;
-                                }
-                                break;
-                        }
-                        eventType = parser.next();
-                    }
-                    Log.i("test","route_list:"+list);
-                    //핸들러 메시지전송
-                    handler.sendEmptyMessage(0);
-                    //연결종료
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
 
-                    receiveMsg = sb.toString();
-                    br.close();
-                    isr.close();
-                    osw.close();
-                }else{
-                    Log.i("통신결과확인 : ",conn.getResponseCode()+"에러");
-                }
-                conn.disconnect();
-            }catch(Exception e){
-
-            }
-
-            return receiveMsg;
+            //txt1.setText(s);
         }
     }
 
-    //어댑터
+    //이너클래스 어댑터
     class RouteAdapter extends BaseAdapter{
         Context context;
         ArrayList<RouteDTO> data;
@@ -286,4 +145,11 @@ public class MainActivity extends AppCompatActivity {
             return convertView;
         }
     }
+
+    String myParser(){
+
+        return "";
+    }
+
 }
+
