@@ -6,19 +6,17 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/route_id"
+        android:id="@+id/route_nm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="11"
         android:textSize="20sp"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/route_nm"
+        android:id="@+id/district_cd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/route_id"
-        android:text="22"
+        android:layout_below="@+id/route_nm"
         android:textSize="20sp"
         android:textStyle="bold"/>
 

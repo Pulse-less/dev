@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     //이너클래스로 설정 -> 데이터가져오기
     class TestTask extends AsyncTask<Void, Void, String>{
         private String url;
@@ -153,37 +154,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
-            //txt1.setText(s);
         }
     }
-
-//    //파싱클래스
-//    class XmlParsingTask extends AsyncTask<String, Void, String>{
-//        private String xmlString;
-//
-//        public XmlParsingTask(String xmlString){
-//            this.xmlString = xmlString;
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            try {
-//                XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-//                InputStream is = new ByteArrayInputStream(xmlString.getBytes());
-//                parser.setInput(is, "UTF-8");
-//
-//            }catch(Exception e){
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//        }
-//    }
 
     //이너클래스 어댑터
     class RouteAdapter extends BaseAdapter{
