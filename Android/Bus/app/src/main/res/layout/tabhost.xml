@@ -6,26 +6,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:id="@+id/btnBack1"
-            android:text="돌아가기"/>
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnBack"
+            android:text="="/>
+
         <EditText
-            android:id="@+id/editSearch"
+            android:id="@+id/routeSearch"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btnBack"
             android:hint="버스 검색"
             android:textSize="20dp"
-            android:background="@drawable/line"
-            android:layout_weight="3"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"/>
-    </LinearLayout>
+            android:inputType="number"
+            android:imeOptions="actionSearch"
+            android:visibility="visible"/>
+        <EditText
+            android:id="@+id/stationSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btnBack"
+            android:hint="정류장,ID 검색"
+            android:textSize="20dp"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:visibility="invisible"/>
+    </RelativeLayout>
 
     <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

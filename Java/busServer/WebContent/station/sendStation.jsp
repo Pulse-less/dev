@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@page import="javax.xml.parsers.DocumentBuilder"%>
 <%@ page import="java.io.*" %>
 <%@ page import="java.sql.*" %>
@@ -8,11 +7,10 @@
 <%@ page import="java.net.*" %>
 <%@ page import="org.jdom2.*" %>
 <%@ page import="org.jdom2.output.*" %>
-<%@ page import="busServer.ConnectDB" %>
 
 <%
 	request.setCharacterEncoding("UTF-8");
-	String param = request.getParameter("route_nm")==null?" ":request.getParameter("route_nm");
+	String param = request.getParameter("station_nm")==null?" ":request.getParameter("station_nm");
 	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 	String id = "scott";
 	String pw = "tiger";
@@ -23,32 +21,36 @@
 	try{
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		conn = DriverManager.getConnection(url, id, pw);
-		String sql = "select * from route where route_nm like ?||'%' order by route_nm";
+		String sql = "select * from station where station_nm like ?||'%' order by station_nm";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, param);
 		rs = pstmt.executeQuery();
 		
-		Element root = new Element("route_info");
+		Element root = new Element("station_info");
 		Document doc = new Document(root);
 		int index = 1;
 		while(rs.next()){
 			//자식노드 생성
-			Element data = new Element("route");
-			Element route_id = new Element("route_id");
-			route_id.setText(rs.getString("route_id"));
-			Element route_nm = new Element("route_nm");
-			route_nm.setText(rs.getString("route_nm"));
+			Element data = new Element("station");
+			Element station_id = new Element("station_id");
+			station_id.setText(rs.getString("station_id"));
+			Element station_nm = new Element("station_nm");
+			station_nm.setText(rs.getString("station_nm"));
 			Element region_name = new Element("region_name");
 			region_name.setText(rs.getString("region_name"));
+			Element mobile_no = new Element("mobile_no");
+			mobile_no.setText(rs.getString("mobile_no"));
 			
-			data.addContent(route_id);
-			data.addContent(route_nm);
+			data.addContent(station_id);
+			data.addContent(station_nm);
 			data.addContent(region_name);
+			data.addContent(mobile_no);
 			
 			root.addContent(data);
-			System.out.println(index +". ="+rs.getString("route_id"));
-			System.out.println(index +". ="+rs.getString("route_nm"));
+			System.out.println(index +". ="+rs.getString("station_id"));
+			System.out.println(index +". ="+rs.getString("station_nm"));
 			System.out.println(index +". ="+rs.getString("region_name"));
+			System.out.println(index +". ="+rs.getString("mobile_no"));
 			index++;
 		}		
 		XMLOutputter xout = new XMLOutputter();
@@ -80,3 +82,13 @@
 		}
 	}
 %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+</html>

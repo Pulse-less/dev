@@ -39,10 +39,10 @@ public class RouteAdapter extends BaseAdapter {
 
         }
         TextView route_nm = (TextView)convertView.findViewById(R.id.route_nm);
-        TextView district_cd = (TextView)convertView.findViewById(R.id.district_cd);
+        TextView region_name = (TextView)convertView.findViewById(R.id.region_name);
 
         route_nm.setText(data.get(position).getRoute_nm());
-        district_cd.setText(data.get(position).getDistrict_cd());
+        region_name.setText(data.get(position).getRegion_name());
 
         return convertView;
     }

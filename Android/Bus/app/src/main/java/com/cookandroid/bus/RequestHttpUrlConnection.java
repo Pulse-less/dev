@@ -72,6 +72,7 @@ public class RequestHttpUrlConnection {
             while((line = br.readLine())!=null){
                 page+=line;
             }
+            br.close();
 
             return page;
 

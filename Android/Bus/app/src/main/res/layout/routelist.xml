@@ -13,11 +13,10 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/district_cd"
+        android:id="@+id/region_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/route_nm"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textSize="15sp"/>
 
 </RelativeLayout>

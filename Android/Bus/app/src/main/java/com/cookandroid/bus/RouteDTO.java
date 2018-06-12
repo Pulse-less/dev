@@ -3,7 +3,7 @@ package com.cookandroid.bus;
 public class RouteDTO {
     private String route_id;
     private String route_nm;
-    private String district_cd;
+    private String region_name;
 
     public String getRoute_id() {
         return route_id;
@@ -21,11 +21,11 @@ public class RouteDTO {
         this.route_nm = route_nm;
     }
 
-    public String getDistrict_cd() {
-        return district_cd;
+    public String getRegion_name() {
+        return region_name;
     }
 
-    public void setDistrict_cd(String district_cd) {
-        this.district_cd = district_cd;
+    public void setRegion_name(String region_name) {
+        this.region_name = region_name;
     }
 }
