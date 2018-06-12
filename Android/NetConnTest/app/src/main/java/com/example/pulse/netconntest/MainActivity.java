@@ -28,6 +28,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     EditText edt1;
     TextView txt1;
     ArrayList<RouteDTO> list;
+
+    String xmlString;
     //핸들러
     Handler handler = new Handler(){
         @Override
@@ -62,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
         btn1 = (Button) findViewById(R.id.btn1);
         listView = (ListView) findViewById(R.id.listView);
-        //scrollView = (ScrollView)findViewById(R.id.scrollView);
         edt1 = (EditText) findViewById(R.id.edt1);
         txt1 = (TextView) findViewById(R.id.txt1);
 
@@ -73,7 +75,59 @@ public class MainActivity extends AppCompatActivity {
                 ContentValues values = new ContentValues();
                 values.put("route_nm", edt1.getText().toString());
                 TestTask testTask = new TestTask(url, values);
-                testTask.execute();
+                try {
+                    xmlString = testTask.execute().get();
+                    //txt1.setText(xmlString);
+                    Log.i("xmlString확인:",xmlString);
+
+                    Thread th = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try{
+                                list = new ArrayList<>();
+                                XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+                                InputStream is = new ByteArrayInputStream(xmlString.getBytes());
+                                parser.setInput(is,"UTF-8");
+
+                                int eventType = parser.getEventType();
+                                String tag;
+                                RouteDTO dto = null;
+                                while(eventType!=XmlPullParser.END_DOCUMENT){
+                                    switch (eventType){
+                                        case XmlPullParser.START_TAG:
+                                            tag = parser.getName();
+                                            if(tag.equals("route_id")){
+                                                dto = new RouteDTO();
+                                                dto.setRoute_id(parser.nextText());
+                                            }
+                                            if(tag.equals("route_nm")){
+                                                dto.setRoute_nm(parser.nextText());
+                                            }
+                                            if(tag.equals("district_cd")){
+                                                dto.setDistrict_cd(parser.nextText());
+                                            }
+                                            break;
+                                        case XmlPullParser.END_TAG:
+                                            tag = parser.getName();
+                                            if(tag.equals("route")){
+                                                list.add(dto);
+                                                dto=null;
+                                            }
+                                            break;
+                                    }
+                                    eventType = parser.next();
+                                }
+                                Log.i("파싱확인","route_list = "+list);
+                                handler.sendEmptyMessage(0);
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    th.start();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -103,6 +157,33 @@ public class MainActivity extends AppCompatActivity {
             //txt1.setText(s);
         }
     }
+
+//    //파싱클래스
+//    class XmlParsingTask extends AsyncTask<String, Void, String>{
+//        private String xmlString;
+//
+//        public XmlParsingTask(String xmlString){
+//            this.xmlString = xmlString;
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... strings) {
+//            try {
+//                XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+//                InputStream is = new ByteArrayInputStream(xmlString.getBytes());
+//                parser.setInput(is, "UTF-8");
+//
+//            }catch(Exception e){
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//        }
+//    }
 
     //이너클래스 어댑터
     class RouteAdapter extends BaseAdapter{
@@ -145,11 +226,5 @@ public class MainActivity extends AppCompatActivity {
             return convertView;
         }
     }
-
-    String myParser(){
-
-        return "";
-    }
-
 }
 
