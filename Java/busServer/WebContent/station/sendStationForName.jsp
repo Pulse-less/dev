@@ -10,7 +10,7 @@
 
 <%
 	request.setCharacterEncoding("UTF-8");
-	String param = request.getParameter("mobile_no")==null?" ":request.getParameter("mobile_no");
+	String param = request.getParameter("station_nm")==null?" ":request.getParameter("station_nm");
 	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 	String id = "scott";
 	String pw = "tiger";
@@ -21,7 +21,7 @@
 	try{
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		conn = DriverManager.getConnection(url, id, pw);
-		String sql = "select * from station where mobile_no like ?||'%' order by station_nm";
+		String sql = "select * from station where station_nm like ?||'%' order by station_nm";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, param);
 		rs = pstmt.executeQuery();
@@ -69,7 +69,7 @@
 		out.clear();
 		//웹브라우저에 출력
 		out.print(result);
-		System.out.println("sendStation xml완성");
+		System.out.println("sendStationForName xml완성");
 		System.out.println("끝!");
 	}catch(Exception e) {
 		e.printStackTrace();

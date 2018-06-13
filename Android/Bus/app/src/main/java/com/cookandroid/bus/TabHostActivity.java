@@ -177,9 +177,17 @@ public class TabHostActivity extends TabActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH){
                     //Log.i("입력확인", v.getText().toString());
-                    String url = Common.SERVER_URL+"/busServer/station/sendStation.jsp";
+                    //입력값이 숫자인지 문자인지 판별하기
+                    String url=null;
                     ContentValues values = new ContentValues();
-                    values.put("mobile_no",v.getText().toString());
+                    if(isNumber(v.getText().toString())){
+                        //숫자일때
+                        url = Common.SERVER_URL+"/busServer/station/sendStation.jsp";
+                        values.put("mobile_no",v.getText().toString());
+                    }else{
+                        url = Common.SERVER_URL+"/busServer/station/sendStationForName.jsp";
+                        values.put("station_nm",v.getText().toString());
+                    }
                     SelectTask stationTask = new SelectTask(url, values);
                     try{
                         xmlString = stationTask.execute().get();
@@ -247,9 +255,6 @@ public class TabHostActivity extends TabActivity {
             }
         });
 
-
-
-
         //뒤로가기
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,5 +264,16 @@ public class TabHostActivity extends TabActivity {
             }
         });
 
+    }
+
+    public static boolean isNumber(String str){
+        boolean check = true;
+        for(int i=0; i<str.length();i++){
+            if(!Character.isDigit(str.charAt(i))){
+                check=false;
+                break;
+            }
+        }
+        return check;
     }
 }

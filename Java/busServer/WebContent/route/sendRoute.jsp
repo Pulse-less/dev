@@ -67,7 +67,8 @@
 		out.clear();
 		//웹브라우저에 출력
 		out.print(result);
-		System.out.println("xml완성 끝!");
+		System.out.println("sendRoute xml완성");
+		System.out.println("끝!");
 	}catch(Exception e) {
 		e.printStackTrace();
 	}finally {
