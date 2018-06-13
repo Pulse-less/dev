@@ -8,7 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="150dp"
+        android:background="#98e491">
         <Button
             android:id="@+id/btnPrevious"
             android:layout_width="40dp"
@@ -56,5 +57,6 @@
     <ListView
         android:id="@+id/busInfoList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"
+        android:background="#baecc6"></ListView>
 </LinearLayout>

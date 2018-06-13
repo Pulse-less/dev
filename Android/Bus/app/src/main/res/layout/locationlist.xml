@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/route_nm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:textSize="20dp"
+        android:text="노선명"/>
+    <TextView
+        android:id="@+id/direction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/route_nm"
+        android:text="방향"/>
+    <TextView
+        android:id="@+id/timer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/route_nm"
+        android:layout_toRightOf="@+id/route_nm"
+        android:paddingLeft="80dp"
+        android:text="test"
+        android:textSize="15dp"/>
+    <TextView
+        android:id="@+id/timer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/direction"
+        android:layout_below="@+id/timer1"
+        android:layout_toRightOf="@+id/route_nm"
+        android:paddingLeft="80dp"
+        android:text="test"
+        android:textSize="15dp"/>
+
+</RelativeLayout>

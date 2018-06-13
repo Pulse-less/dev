@@ -34,6 +34,7 @@ public class TabHostActivity extends TabActivity {
     StationAdapter stationAdapter;
     ArrayList<RouteDTO> routelist;
     ArrayList<StationDTO> stationlist;
+    String temp;
     String xmlString;
 
     //핸들러 설정
@@ -58,6 +59,8 @@ public class TabHostActivity extends TabActivity {
                     startActivity(intent);
                 }
             });
+
+
         }
     };
 
@@ -65,8 +68,20 @@ public class TabHostActivity extends TabActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            stationAdapter = new StationAdapter(getApplicationContext(),stationlist);
+            stationAdapter = new StationAdapter(getApplicationContext(), stationlist);
             stopListView.setAdapter(stationAdapter);
+
+            stopListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getApplicationContext(),StopSearchActivity.class);
+                    intent.putExtra("station_id",stationAdapter.data.get(position).getStation_id());
+                    intent.putExtra("station_nm",stationAdapter.data.get(position).getStation_nm());
+                    intent.putExtra("mobile_no",stationAdapter.data.get(position).getMobile_no());
+                    intent.putExtra("region_name",stationAdapter.data.get(position).getRegion_name());
+                    startActivity(intent);
+                }
+            });
         }
     };
 
@@ -279,24 +294,6 @@ public class TabHostActivity extends TabActivity {
                 return true;
             }
         });
-
-        //각 리스트뷰 항목 클릭시 인텐트로 액티비티 전환해야함
-//        busListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(getApplicationContext(), BusSearchActivity.class);
-//                //intent.putExtra("");
-//                intent.putExtra("route_info",);
-//            }
-//        });
-
-//        stopListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//        });
-
 
         //뒤로가기
         btnBack.setOnClickListener(new View.OnClickListener() {

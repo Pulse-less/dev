@@ -6,55 +6,58 @@
     android:orientation="vertical"
     tools:context="com.cookandroid.bus.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:orientation="horizontal">
-
+        android:background="#98e491">
         <Button
+            android:id="@+id/btnPrevious"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="백" />
+        <Button
+            android:id="@+id/btnMain"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="▲"/>
+        <TextView
+            android:id="@+id/mobile_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnBack3"
-            android:layout_weight="1"
-            android:text="돌아가기" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="13"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="25dp"
-                android:text="정류장번호"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="25dp"
-                android:text="정류장이름"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="25dp"
-                android:text="정류장정보"/>
-
-        </LinearLayout>
-
-        <Button
+            android:layout_toRightOf="@+id/btnPrevious"
+            android:layout_below="@+id/btnPrevious"
+            android:layout_toLeftOf="@+id/btnMain"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:text="정류소번호"/>
+        <TextView
+            android:id="@+id/station_nm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnMain2"
-            android:layout_weight="1"
-            android:text="메인으로" />
+            android:layout_toRightOf="@+id/btnPrevious"
+            android:layout_toLeftOf="@+id/btnMain"
+            android:layout_below="@+id/mobile_no"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:text="정류장 이름"/>
+        <TextView
+            android:id="@+id/routeline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btnPrevious"
+            android:layout_toLeftOf="@+id/btnMain"
+            android:layout_below="@+id/station_nm"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:text="↔"/>
+    </RelativeLayout>
 
-    </LinearLayout>
+    <ListView
+        android:id="@+id/stopInfoList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#baecc6"></ListView>
 
 </LinearLayout>
