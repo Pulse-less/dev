@@ -13,6 +13,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String param = request.getParameter("route_nm")==null?" ":request.getParameter("route_nm");
+	String param2 = request.getParameter("route_id")==null?" ":request.getParameter("route_id");
 	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 	String id = "scott";
 	String pw = "tiger";
@@ -23,44 +24,41 @@
 	try{
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		conn = DriverManager.getConnection(url, id, pw);
-		String sql = "select * from route where route_nm like ?||'%' order by route_nm";
+		String sql = "select * from routestation where route_nm = ? and route_id = ?";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, param);
+		pstmt.setString(2, param2);
 		rs = pstmt.executeQuery();
 		
-		Element root = new Element("route_info");
+		Element root = new Element("routestation_info");
 		Document doc = new Document(root);
 		int index = 1;
 		while(rs.next()){
 			//자식노드 생성
-			Element data = new Element("route");
+			Element data = new Element("routestation");
 			Element route_id = new Element("route_id");
 			route_id.setText(rs.getString("route_id"));
+			Element station_id = new Element("station_id");
+			station_id.setText(rs.getString("station_id"));
+			Element sta_order = new Element("sta_order");
+			sta_order.setText(rs.getString("sta_order"));
 			Element route_nm = new Element("route_nm");
 			route_nm.setText(rs.getString("route_nm"));
-			Element route_tp = new Element("route_tp");
-			route_tp.setText(rs.getString("route_tp"));
-			Element region_name = new Element("region_name");
-			region_name.setText(rs.getString("region_name"));
-			Element st_sta_nm = new Element("st_sta_nm");
-			st_sta_nm.setText(rs.getString("st_sta_nm"));
-			Element ed_sta_nm = new Element("ed_sta_nm");
-			ed_sta_nm.setText(rs.getString("ed_sta_nm"));
+			Element station_nm = new Element("station_nm");
+			station_nm.setText(rs.getString("station_nm"));
 			
 			data.addContent(route_id);
+			data.addContent(station_id);
+			data.addContent(sta_order);
 			data.addContent(route_nm);
-			data.addContent(route_tp);
-			data.addContent(region_name);
-			data.addContent(st_sta_nm);
-			data.addContent(ed_sta_nm);
+			data.addContent(station_nm);
 			
 			root.addContent(data);
 			System.out.println(index +". ="+rs.getString("route_id"));
+			System.out.println(index +". ="+rs.getString("station_id"));
+			System.out.println(index +". ="+rs.getString("sta_order"));
 			System.out.println(index +". ="+rs.getString("route_nm"));
-			System.out.println(index +". ="+rs.getString("route_tp"));
-			System.out.println(index +". ="+rs.getString("region_name"));
-			System.out.println(index +". ="+rs.getString("st_sta_nm"));
-			System.out.println(index +". ="+rs.getString("ed_sta_nm"));
+			System.out.println(index +". ="+rs.getString("station_nm"));
 			index++;
 		}		
 		XMLOutputter xout = new XMLOutputter();
@@ -79,7 +77,7 @@
 		out.clear();
 		//웹브라우저에 출력
 		out.print(result);
-		System.out.println("sendRoute xml완성");
+		System.out.println("sendRouteStation xml완성");
 		System.out.println("끝!");
 	}catch(Exception e) {
 		e.printStackTrace();

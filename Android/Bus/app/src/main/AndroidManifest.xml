@@ -40,6 +40,8 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".TabHostActivity"/>
         <activity android:name=".NetworkStatusActivity" />
+        <activity android:name=".BusSearchActivity"/>
+        <activity android:name=".StopSearchActivity"/>
     </application>
 
 </manifest>

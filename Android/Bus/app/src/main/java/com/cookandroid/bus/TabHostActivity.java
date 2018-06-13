@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -42,6 +43,21 @@ public class TabHostActivity extends TabActivity {
             super.handleMessage(msg);
             routeAdapter = new RouteAdapter(getApplicationContext(), routelist);
             busListView.setAdapter(routeAdapter);
+
+            busListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getApplicationContext(), BusSearchActivity.class);
+                    //intent.putExtra("");
+                    intent.putExtra("route_id",routeAdapter.data.get(position).getRoute_id());
+                    intent.putExtra("route_tp",routeAdapter.data.get(position).getRoute_tp());
+                    intent.putExtra("route_nm", routeAdapter.data.get(position).getRoute_nm());
+                    intent.putExtra("st_sta_nm",routeAdapter.data.get(position).getSt_sta_nm());
+                    intent.putExtra("ed_sta_nm",routeAdapter.data.get(position).getEd_sta_nm());
+                    intent.putExtra("region_name",routeAdapter.data.get(position).getRegion_name());
+                    startActivity(intent);
+                }
+            });
         }
     };
 
@@ -134,8 +150,17 @@ public class TabHostActivity extends TabActivity {
                                                 if(tag.equals("route_nm")){
                                                     dto.setRoute_nm(parser.nextText());
                                                 }
+                                                if(tag.equals("route_tp")){
+                                                    dto.setRoute_tp(parser.nextText());
+                                                }
                                                 if(tag.equals("region_name")){
                                                     dto.setRegion_name(parser.nextText());
+                                                }
+                                                if(tag.equals("st_sta_nm")){
+                                                    dto.setSt_sta_nm(parser.nextText());
+                                                }
+                                                if(tag.equals("ed_sta_nm")){
+                                                    dto.setEd_sta_nm(parser.nextText());
                                                 }
                                                 break;
                                             case XmlPullParser.END_TAG:
@@ -255,6 +280,24 @@ public class TabHostActivity extends TabActivity {
             }
         });
 
+        //각 리스트뷰 항목 클릭시 인텐트로 액티비티 전환해야함
+//        busListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(getApplicationContext(), BusSearchActivity.class);
+//                //intent.putExtra("");
+//                intent.putExtra("route_info",);
+//            }
+//        });
+
+//        stopListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
+
+
         //뒤로가기
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,6 +309,7 @@ public class TabHostActivity extends TabActivity {
 
     }
 
+    //숫자 문자 입력판별 함수
     public static boolean isNumber(String str){
         boolean check = true;
         for(int i=0; i<str.length();i++){

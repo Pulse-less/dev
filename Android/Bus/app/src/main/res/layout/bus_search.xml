@@ -6,48 +6,55 @@
     android:orientation="vertical"
     tools:context="com.cookandroid.bus.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="horizontal">
-
+        android:layout_height="150dp">
         <Button
+            android:id="@+id/btnPrevious"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="백" />
+        <Button
+            android:id="@+id/btnMain"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="▲"/>
+        <TextView
+            android:id="@+id/route_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnBack2"
-            android:layout_weight="1"
-            android:text="돌아가기" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="13"
-        android:layout_gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btnPrevious"
+            android:layout_below="@+id/btnPrevious"
+            android:layout_toLeftOf="@+id/btnMain"
             android:gravity="center"
-            android:textSize="25dp"
+            android:textSize="15dp"
             android:text="버스정보"/>
-
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/route_nm"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btnPrevious"
+            android:layout_toLeftOf="@+id/btnMain"
+            android:layout_below="@+id/route_info"
             android:gravity="center"
             android:textSize="25dp"
             android:text="버스번호"/>
-
-    </LinearLayout>
-
-        <Button
+        <TextView
+            android:id="@+id/routeline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnMain1"
-            android:layout_weight="1"
-            android:text="메인으로" />
+            android:layout_toRightOf="@+id/btnPrevious"
+            android:layout_toLeftOf="@+id/btnMain"
+            android:layout_below="@+id/route_nm"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:text="↔"/>
+    </RelativeLayout>
 
-    </LinearLayout>
-
+    <ListView
+        android:id="@+id/busInfoList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
 </LinearLayout>
