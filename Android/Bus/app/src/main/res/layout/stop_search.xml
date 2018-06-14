@@ -58,6 +58,6 @@
         android:id="@+id/stopInfoList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#baecc6"></ListView>
+        android:background="#ffffff"></ListView>
 
 </LinearLayout>

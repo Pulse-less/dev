@@ -23,7 +23,7 @@
 	try{
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		conn = DriverManager.getConnection(url, id, pw);
-		String sql = "select * from route where route_nm like ?||'%' order by route_nm";
+		String sql = "select route_id, route_nm, route_tp, st_sta_nm, ed_sta_nm, region_name from route where route_nm like ?||'%' order by route_nm";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, param);
 		rs = pstmt.executeQuery();

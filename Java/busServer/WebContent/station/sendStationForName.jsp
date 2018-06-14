@@ -21,7 +21,7 @@
 	try{
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		conn = DriverManager.getConnection(url, id, pw);
-		String sql = "select * from station where station_nm like ?||'%' order by station_nm";
+		String sql = "select station_id, station_nm, region_name, mobile_no from station where station_nm like ?||'%' order by station_nm";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, param);
 		rs = pstmt.executeQuery();

@@ -11,23 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#98e491">
+        android:background="@drawable/line">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:id="@+id/btnMenu"
-            android:layout_gravity="center"
-            android:text="메뉴"/>
+            android:background="#00ff0000"
+            android:text="■"
+            android:textSize="20dp"/>
 
         <Button
             android:id="@+id/btnSearchChange"
             android:layout_width="match_parent"
-            android:layout_height="37sp"
+            android:layout_height="match_parent"
             android:hint=" 버스 또는 정류장 검색"
             android:textSize="20sp"
-            android:layout_gravity="center"
-            android:background="@drawable/line"/>
+            android:background="#00ff0000"/>
 
     </LinearLayout>
 
@@ -35,8 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listView"
-        android:background="#baecc6">
-
+        android:background="#ffffff">
     </ListView>
 
 </LinearLayout>

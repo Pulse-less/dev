@@ -1,27 +1,32 @@
 package com.cookandroid.bus;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class LocationAdapter extends BaseAdapter{
     Context context;
-    ArrayList<LocationDTO> data;
+    ArrayList<LocationTimeDTO> data;
     String predictTime1;
     String predictTime2;
     String locationNo1, locationNo2;
-    String route_id;
 
 
-    public LocationAdapter(Context context, ArrayList<LocationDTO> data){
+    public LocationAdapter(Context context, ArrayList<LocationTimeDTO> data){
         this.context = context;
         this.data = data;
+        exchangeIdToNm();
     }
 
     @Override
@@ -55,8 +60,6 @@ public class LocationAdapter extends BaseAdapter{
         locationNo2 = data.get(position).getLocationNo2();
         route_nm.setText(data.get(position).getRoute_nm());
 
-
-
         timer2.setText("도착정보없음");
         direction.setText(locationNo1+"정거장 전");
 
@@ -80,4 +83,17 @@ public class LocationAdapter extends BaseAdapter{
         return convertView;
     }
 
+    void exchangeIdToNm() {
+        String url = Common.SERVER_URL + "/busServer/location/sendLocation.jsp";
+        ContentValues values = new ContentValues();
+        for(int i=0;i<data.size();i++) {
+            values.put("route_id", data.get(i).getRoute_id());
+            LocationTask locationtask = new LocationTask(url, values);
+            try {
+                data.get(i).setRoute_nm(locationtask.execute().get());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

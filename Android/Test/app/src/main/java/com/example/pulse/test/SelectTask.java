@@ -1,4 +1,4 @@
-package com.cookandroid.bus;
+package com.example.pulse.test;
 
 import android.content.ContentValues;
 import android.os.AsyncTask;

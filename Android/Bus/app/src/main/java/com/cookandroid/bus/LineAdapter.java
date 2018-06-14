@@ -8,11 +8,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class BusAdapter extends BaseAdapter {
+public class LineAdapter extends BaseAdapter {
     Context context;
-    ArrayList<RouteStationDTO> data;
+    ArrayList<LineDTO> data;
 
-    public BusAdapter(Context context, ArrayList<RouteStationDTO> data) {
+    public LineAdapter(Context context, ArrayList<LineDTO> data) {
         this.context = context;
         this.data = data;
     }
@@ -35,13 +35,13 @@ public class BusAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
-            convertView = View.inflate(context,R.layout.stationlist,null);
-
+            convertView = View.inflate(context,R.layout.linelist,null);
         }
-        TextView station_nm = (TextView)convertView.findViewById(R.id.station_nm);
-        TextView mobile_no = (TextView)convertView.findViewById(R.id.mobile_no);
+        TextView route_nm_text = (TextView)convertView.findViewById(R.id.route_nm_text);
+        TextView mobile_no_text = (TextView)convertView.findViewById(R.id.mobile_no_text);
 
-        station_nm.setText(data.get(position).getStation_nm());
+        route_nm_text.setText(data.get(position).getStation_nm());
+        mobile_no_text.setText(data.get(position).getMobile_no());
 
         return convertView;
     }

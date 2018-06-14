@@ -15,13 +15,14 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="백" />
+            android:text="◀" />
         <Button
             android:id="@+id/btnMain"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="▲"/>
+
         <TextView
             android:id="@+id/route_info"
             android:layout_width="wrap_content"
@@ -55,8 +56,8 @@
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/busInfoList"
+        android:id="@+id/busListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#baecc6"></ListView>
+        android:background="#ffffff"></ListView>
 </LinearLayout>

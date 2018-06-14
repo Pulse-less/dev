@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     //ScrollView scrollView;
     EditText edt1;
     TextView txt1;
-    ArrayList<RouteDTO> list;
+    ArrayList<BusDTO> list;
 
     String xmlString;
     //핸들러
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://192.168.0.2:8080/busServer/route/sendRoute.jsp";
+                String url = "http://192.168.0.2:8080/busServer/test/test.jsp";
                 ContentValues values = new ContentValues();
                 values.put("route_nm", edt1.getText().toString());
                 TestTask testTask = new TestTask(url, values);
@@ -91,25 +91,49 @@ public class MainActivity extends AppCompatActivity {
 
                                 int eventType = parser.getEventType();
                                 String tag;
-                                RouteDTO dto = null;
+                                BusDTO dto = null;
                                 while(eventType!=XmlPullParser.END_DOCUMENT){
                                     switch (eventType){
                                         case XmlPullParser.START_TAG:
                                             tag = parser.getName();
                                             if(tag.equals("route_id")){
-                                                dto = new RouteDTO();
+                                                dto = new BusDTO();
                                                 dto.setRoute_id(parser.nextText());
+                                            }
+                                            if(tag.equals("station_id")){
+                                                dto.setStation_id(parser.nextText());
                                             }
                                             if(tag.equals("route_nm")){
                                                 dto.setRoute_nm(parser.nextText());
                                             }
-                                            if(tag.equals("district_cd")){
-                                                dto.setDistrict_cd(parser.nextText());
+                                            if(tag.equals("staton_nm")){
+                                                dto.setStation_nm(parser.nextText());
+                                            }
+                                            if(tag.equals("mobile_no")){
+                                                dto.setMobile_no(parser.nextText());
+                                            }
+                                            if(tag.equals("route_tp")){
+                                                dto.setRoute_tp(parser.nextText());
+                                            }
+                                            if(tag.equals("region_name")){
+                                                dto.setRegion_name(parser.nextText());
+                                            }
+                                            if(tag.equals("st_sta_nm")){
+                                                dto.setSt_sta_nm(parser.nextText());
+                                            }
+                                            if(tag.equals("ed_sta_nm")){
+                                                dto.setEd_sta_nm(parser.nextText());
+                                            }
+                                            if(tag.equals("company_nm")){
+                                                dto.setCompany_nm(parser.nextText());
+                                            }
+                                            if(tag.equals("sta_order")){
+                                                dto.setSta_order(parser.nextText());
                                             }
                                             break;
                                         case XmlPullParser.END_TAG:
                                             tag = parser.getName();
-                                            if(tag.equals("route")){
+                                            if(tag.equals("bus")){
                                                 list.add(dto);
                                                 dto=null;
                                             }
@@ -160,9 +184,9 @@ public class MainActivity extends AppCompatActivity {
     //이너클래스 어댑터
     class RouteAdapter extends BaseAdapter{
         Context context;
-        ArrayList<RouteDTO> data;
+        ArrayList<BusDTO> data;
 
-        public RouteAdapter(Context context, ArrayList<RouteDTO> data) {
+        public RouteAdapter(Context context, ArrayList<BusDTO> data) {
             this.context = context;
             this.data = data;
         }
@@ -187,13 +211,11 @@ public class MainActivity extends AppCompatActivity {
             if(convertView == null){
                 convertView = View.inflate(context,R.layout.routelist,null);
             }
-            TextView route_id = (TextView)convertView.findViewById(R.id.routd_id);
-            TextView routd_nm = (TextView)convertView.findViewById(R.id.routd_nm);
-            TextView district_cd = (TextView)convertView.findViewById(R.id.distirct_cd);
+            TextView route_id = (TextView)convertView.findViewById(R.id.route_nm);
+            TextView region_tp = (TextView)convertView.findViewById(R.id.region_tp);
 
-            route_id.setText(data.get(position).getRoute_id());
-            routd_nm.setText(data.get(position).getRoute_nm());
-            district_cd.setText(data.get(position).getDistrict_cd());
+            route_id.setText(data.get(position).getRoute_nm());
+            region_tp.setText(data.get(position).getRegion_name()+" "+data.get(position).getRoute_tp());
 
             return convertView;
         }
