@@ -5,8 +5,12 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,15 +36,13 @@ public class MainActivity extends AppCompatActivity {
             //이곳에 설정
         }
 
-        //디비설정
-        //dbHelper = new BusDBHelper(this, "busDB.db",null,1);
-
         //검색액티비티로 전환
         btnSearchChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(),TabHostActivity.class);
-                startActivity(in);
+                Intent intent = new Intent(getApplicationContext(),TabHostActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             }
         });
 
@@ -48,10 +50,33 @@ public class MainActivity extends AppCompatActivity {
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getApplicationContext(),v);
+                getMenuInflater().inflate(R.menu.menu,popupMenu.getMenu());
 
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch(item.getItemId()){
+                            case R.id.item1:
+                                break;
+                            case R.id.item2:
+                                break;
+                            case R.id.item3:
+                                break;
+                            case R.id.item4:
+                                break;
+                            case R.id.item5:
+                                break;
+                            case R.id.item6:
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+                popupMenu.show();
             }
         });
-
     }
 
     //뒤로가기 버튼 두번누를시 종료

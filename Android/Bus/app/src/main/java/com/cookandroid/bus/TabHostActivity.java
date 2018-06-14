@@ -140,6 +140,7 @@ public class TabHostActivity extends TabActivity {
                 intent.putExtra("st_sta_nm",routeAdapter.data.get(position).getSt_sta_nm());
                 intent.putExtra("ed_sta_nm",routeAdapter.data.get(position).getEd_sta_nm());
                 intent.putExtra("region_name",routeAdapter.data.get(position).getRegion_name());
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -152,6 +153,7 @@ public class TabHostActivity extends TabActivity {
                 intent.putExtra("station_nm",stationAdapter.data.get(position).getStation_nm());
                 intent.putExtra("mobile_no",stationAdapter.data.get(position).getMobile_no());
                 intent.putExtra("region_name",stationAdapter.data.get(position).getRegion_name());
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });

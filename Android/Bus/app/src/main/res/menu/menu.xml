@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item1"
+        android:title="버스어플 제작!"/>
+    <item
+        android:id="@+id/item2"
+        android:title="2016100270 장현규"/>
+    <item
+        android:id="@+id/item3"
+        android:title="최재민"/>
+
+    <item
+        android:id="@+id/item4"
+        android:title="장선필"/>
+
+    <item
+        android:id="@+id/item5"
+        android:title="임성민"/>
+
+    <item
+        android:id="@+id/item6"
+        android:title="김지훈"/>
+
+</menu>
