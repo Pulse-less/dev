@@ -26,9 +26,9 @@ public class NetworkStatusActivity extends AppCompatActivity {
         if(activeNetwork!=null){
             //네트워크 연결 타입 체크
             if(activeNetwork.getType()==ConnectivityManager.TYPE_WIFI){
-                Toast.makeText(getApplicationContext(),activeNetwork.getTypeName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),activeNetwork.getTypeName()+"로 인터넷에 연결되었습니다.",Toast.LENGTH_SHORT).show();
             }else if(activeNetwork.getType()==ConnectivityManager.TYPE_MOBILE){
-                Toast.makeText(getApplicationContext(),activeNetwork.getTypeName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),activeNetwork.getTypeName()+"로 인터넷에 연결되었습니다.",Toast.LENGTH_SHORT).show();
             }
         }else{
             //네트워크에 연결이 안되어있을때
@@ -40,6 +40,7 @@ public class NetworkStatusActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            finish();
         }
     }
 }

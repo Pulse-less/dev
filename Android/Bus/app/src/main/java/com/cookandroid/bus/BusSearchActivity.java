@@ -10,13 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class BusSearchActivity extends AppCompatActivity {
-    Button btnPrevious, btnMain;
+    ImageButton btnPrevious, btnMain;
     TextView route_info, route_nm, routeline;
     ListView busListView;
     String st_sta_nm, ed_sta_nm,region_name,route_tp,route_id,route_nm_;
@@ -28,8 +30,8 @@ public class BusSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_search);
 
-        btnPrevious=(Button)findViewById(R.id.btnPrevious);
-        btnMain=(Button)findViewById(R.id.btnMain);
+        btnPrevious=(ImageButton)findViewById(R.id.btnPrevious);
+        btnMain=(ImageButton)findViewById(R.id.btnMain);
         busListView = (ListView)findViewById(R.id.busListView);
         route_info = (TextView)findViewById(R.id.route_info);
         route_nm = (TextView)findViewById(R.id.route_nm);
@@ -68,16 +70,20 @@ public class BusSearchActivity extends AppCompatActivity {
         btnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), TabHostActivity.class);
-                startActivity(in);
+                Intent intent = new Intent(getApplicationContext(), TabHostActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Toast.makeText(getApplicationContext(),"뒤로 돌아갑니다.",Toast.LENGTH_SHORT).show();
+                startActivity(intent);
             }
         });
 
         btnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(in);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Toast.makeText(getApplicationContext(),"메인으로 돌아갑니다.",Toast.LENGTH_SHORT).show();
+                startActivity(intent);
             }
         });
 

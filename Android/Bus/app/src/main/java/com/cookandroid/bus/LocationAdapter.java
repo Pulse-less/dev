@@ -3,6 +3,8 @@ package com.cookandroid.bus;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -21,7 +23,6 @@ public class LocationAdapter extends BaseAdapter{
     String predictTime1;
     String predictTime2;
     String locationNo1, locationNo2;
-
 
     public LocationAdapter(Context context, ArrayList<LocationTimeDTO> data){
         this.context = context;
@@ -45,7 +46,7 @@ public class LocationAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if(convertView == null){
             convertView = View.inflate(context,R.layout.locationlist,null);
         }

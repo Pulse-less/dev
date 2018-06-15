@@ -10,18 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="#98e491">
-        <Button
+        <ImageButton
             android:id="@+id/btnPrevious"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
             android:layout_alignParentLeft="true"
-            android:text="◀" />
-        <Button
+            android:background="@drawable/back_img"/>
+        <ImageButton
             android:id="@+id/btnMain"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
-            android:text="▲"/>
+            android:background="@drawable/home_img"/>
 
         <TextView
             android:id="@+id/route_info"

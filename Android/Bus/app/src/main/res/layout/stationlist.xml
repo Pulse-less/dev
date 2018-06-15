@@ -17,5 +17,13 @@
         android:id="@+id/mobile_no"
         android:layout_below="@+id/station_nm"
         android:textSize="15sp"/>
+   <!-- <Button
+        android:id="@+id/btnBookmark"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:text="☆"
+        android:textSize="30dp"
+        android:background="#00ffffff"
+        android:layout_alignParentRight="true"/>-->
 
 </RelativeLayout>

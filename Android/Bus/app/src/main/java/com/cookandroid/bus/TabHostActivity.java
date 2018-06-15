@@ -4,7 +4,10 @@ import android.app.TabActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -12,15 +15,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 @SuppressWarnings("deprecation")
 public class TabHostActivity extends TabActivity {
-    Button btnBack;
+    ImageButton btnBack;
     EditText searchEdit;
     ListView busListView, stopListView;
     RouteAdapter routeAdapter;
@@ -34,7 +39,7 @@ public class TabHostActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabhost);
 
-        btnBack=(Button)findViewById(R.id.btnBack);
+        btnBack=(ImageButton)findViewById(R.id.btnBack);
         searchEdit = (EditText)findViewById(R.id.searchEdit);
         busListView = (ListView)findViewById(R.id.busListView);
         stopListView = (ListView)findViewById(R.id.stopListView);
@@ -56,14 +61,22 @@ public class TabHostActivity extends TabActivity {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
+                //탭색상
+                TextView tv = (TextView)tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+                TextView tv2 = (TextView)tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
+
                 if(tabHost.getCurrentTabTag().equals("TAB1")){
                     searchEdit.setText("");
                     searchEdit.setHint("버스 검색");
                     searchEdit.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+                    tv.setTextColor(Color.parseColor("#FF6C6C"));
+                    tv2.setTextColor(Color.parseColor("#000000"));
                 }else{
                     searchEdit.setText("");
                     searchEdit.setHint("정류장,ID 검색");
                     searchEdit.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+                    tv.setTextColor(Color.parseColor("#000000"));
+                    tv2.setTextColor(Color.parseColor("#FF6C6C"));
                 }
             }
         });
@@ -163,8 +176,10 @@ public class TabHostActivity extends TabActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(in);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Toast.makeText(getApplicationContext(),"메인으로 돌아갑니다.",Toast.LENGTH_SHORT).show();
+                startActivity(intent);
             }
         });
 

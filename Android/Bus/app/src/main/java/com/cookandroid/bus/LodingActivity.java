@@ -24,7 +24,7 @@ public class LodingActivity extends Activity {
         //디비를 로딩 페이지에서 만들어서 인텐트로 넘겨볼까?
         //-> 로딩페이지에서 만든 후 디비를 다시 읽거나 할때는 커서를 이용하자!
         //먼저 웹서버와 연결한 후 연결체크에 따라 메인을 동작하게 하자
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(),NetworkStatusActivity.class);
         startActivity(intent);
         finish();
     }
