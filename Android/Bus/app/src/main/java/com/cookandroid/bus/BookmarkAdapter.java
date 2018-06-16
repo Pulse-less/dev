@@ -5,6 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.cookandroid.bus.R;
+import com.cookandroid.bus.StationBookmarkDTO;
+
 import java.util.ArrayList;
 
 public class BookmarkAdapter extends BaseAdapter {

@@ -1,18 +1,12 @@
 package com.cookandroid.bus;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -20,15 +14,12 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     Button btnSearchChange;
     ImageButton btnMenu;
     private long pressedTime;
     ListView listView;
-    BookmarkDBHelper bookmarkDBHelper;
     ArrayList<StationBookmarkDTO> sbList;
     //ArrayList<RouteBookmarkDTO> rbList;
     BookmarkAdapter adapter;
@@ -43,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.listView);
 
         //이때 디비가 없으면 생성된다.
-        //bookmarkDBHelper.getInstance(getApplicationContext());
+        BookmarkDBHelper bookmarkDBHelper = BookmarkDBHelper.getInstance(getApplicationContext());
 
         //북마크가 있는지 확인 후 있으면 메인엑티비티에 있는 리스트에 북마크 뿌림 없으면 아무동작 안함
-        /*if(bookmarkDBHelper.isBookmark()){
+        if(bookmarkDBHelper.isBookmark()){
             Log.i("널체크",bookmarkDBHelper.isBookmark()+"이거뭐임?");
             //있으면리스트뷰에 전개
             sbList = bookmarkDBHelper.selectStation();//정류장북마크 데이터를 가져와 리스트에 넣기
@@ -60,11 +51,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }else{
             //없으면 아무것도 안하는데 이미지뷰에다 뭐라도 보여줄까..? 등록한 즐겨찾기가 없습니다...같은거
-        }*/
-
-        //-> 북마크 결론...북마크 기능추가하는것 자체는 실패...외부에서 받아오는 api데이터가 중구난방이라 각 액티비티별로 데이터의 양이 달라서
-        // 건드릴수가 없음...
-
+        }
 
 
         //검색액티비티로 전환

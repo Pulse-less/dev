@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class TabHostActivity extends TabActivity {
     ImageButton btnBack;
     EditText searchEdit;
+    TextView tabText1, tabText2;
     ListView busListView, stopListView;
     RouteAdapter routeAdapter;
     StationAdapter stationAdapter;
@@ -57,26 +58,27 @@ public class TabHostActivity extends TabActivity {
 
         tabHost.setCurrentTab(0);
 
+        tabText1 = (TextView)tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+        tabText2 = (TextView)tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
+        tabText1.setTextColor(Color.parseColor("#FF6C6C"));
+
         //탭변경시 이벤트처리
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
                 //탭색상
-                TextView tv = (TextView)tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
-                TextView tv2 = (TextView)tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
-
                 if(tabHost.getCurrentTabTag().equals("TAB1")){
                     searchEdit.setText("");
                     searchEdit.setHint("버스 검색");
                     searchEdit.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-                    tv.setTextColor(Color.parseColor("#FF6C6C"));
-                    tv2.setTextColor(Color.parseColor("#000000"));
+                    tabText1.setTextColor(Color.parseColor("#FF6C6C"));
+                    tabText2.setTextColor(Color.parseColor("#000000"));
                 }else{
                     searchEdit.setText("");
                     searchEdit.setHint("정류장,ID 검색");
                     searchEdit.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-                    tv.setTextColor(Color.parseColor("#000000"));
-                    tv2.setTextColor(Color.parseColor("#FF6C6C"));
+                    tabText1.setTextColor(Color.parseColor("#000000"));
+                    tabText2.setTextColor(Color.parseColor("#FF6C6C"));
                 }
             }
         });

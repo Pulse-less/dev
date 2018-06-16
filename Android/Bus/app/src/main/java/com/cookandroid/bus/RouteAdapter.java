@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class RouteAdapter extends BaseAdapter {
         }
         TextView route_nm = (TextView)convertView.findViewById(R.id.route_nm);
         TextView region_name = (TextView)convertView.findViewById(R.id.region_name);
+        Button bookmark = (Button)convertView.findViewById(R.id.btnBookmark);
 
         route_nm.setText(data.get(position).getRoute_nm());
         region_name.setText(data.get(position).getRegion_name());
